@@ -25,7 +25,7 @@ jobs:
 
       - name: Push to mmovasseghi.github.io
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           cd out
           git init
@@ -34,5 +34,5 @@ jobs:
           git add -A
           git commit -m "deploy: ${{ github.sha }}"
           git branch -M main
-          git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/mmovasseghi/mmovasseghi.github.io.git
+          git remote add origin https://x-access-token:${GH_PAT}@github.com/mmovasseghi/mmovasseghi.github.io.git
           git push -f origin main
