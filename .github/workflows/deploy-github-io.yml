@@ -1,0 +1,38 @@
+name: Deploy to mmovasseghi.github.io
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-user-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: |
+          npm ci --no-audit --no-fund
+          npm run build:static
+
+      - name: Push to mmovasseghi.github.io
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd out
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "deploy: ${{ github.sha }}"
+          git branch -M main
+          git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/mmovasseghi/mmovasseghi.github.io.git
+          git push -f origin main
