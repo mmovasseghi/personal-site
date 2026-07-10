@@ -25,9 +25,17 @@ else
   cd "$APP_DIR"
 fi
 
-echo "==> Build static site..."
-npm ci --no-audit --no-fund
-npm run build:static
+echo "==> Build static site (skip if low disk — upload out/ from local)..."
+if [ "${SKIP_BUILD:-}" = "1" ]; then
+  echo "SKIP_BUILD=1 — expecting pre-uploaded out/"
+elif [ -d out/index.html ]; then
+  echo "out/ already exists, rebuilding..."
+  npm ci --no-audit --no-fund
+  npm run build:static
+else
+  npm ci --no-audit --no-fund
+  npm run build:static
+fi
 
 echo "==> Configure Nginx..."
 cat > /etc/nginx/sites-available/mmovasseghi <<'NGINX'
