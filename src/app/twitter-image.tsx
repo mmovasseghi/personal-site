@@ -1,13 +1,20 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { SITE } from "@/lib/constants";
 
 export const dynamic = "force-static";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${SITE.name} — ${SITE.title}`;
+export const alt =
+  "محمد سینا موثقی نژاد — برنامه‌نویس و توسعه‌دهنده نرم‌افزار در تهران";
 
-export default function TwitterImage() {
+export default async function TwitterImage() {
+  const vazirBold = await readFile(
+    join(process.cwd(), "src/app/fonts/Vazirmatn-Bold.ttf")
+  );
+
   return new ImageResponse(
     (
       <div
@@ -17,6 +24,7 @@ export default function TwitterImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
           padding: 80,
           background:
             "linear-gradient(135deg, #06070B 0%, #090B12 50%, #0a0f1a 100%)",
@@ -24,39 +32,61 @@ export default function TwitterImage() {
       >
         <div
           style={{
-            fontSize: 28,
+            fontSize: 26,
             color: "#00F5FF",
             fontFamily: "monospace",
-            letterSpacing: "0.3em",
+            letterSpacing: "0.35em",
             textTransform: "uppercase",
           }}
         >
-          Cyber Botanical Laboratory
+          mmovasseghi.dev
         </div>
         <div
           style={{
-            marginTop: 24,
-            fontSize: 64,
+            marginTop: 32,
+            fontSize: 76,
             fontWeight: 700,
             color: "#ffffff",
+            fontFamily: "Vazirmatn",
+            direction: "rtl",
+            textAlign: "center",
           }}
         >
-          {SITE.name}
+          محمد سینا موثقی نژاد
         </div>
         <div
           style={{
-            marginTop: 16,
-            fontSize: 32,
-            color: "rgba(255,255,255,0.5)",
+            marginTop: 20,
+            fontSize: 36,
+            color: "rgba(165,180,252,0.85)",
+            fontFamily: "Vazirmatn",
+            direction: "rtl",
           }}
         >
-          {SITE.title}
+          برنامه‌نویس و توسعه‌دهنده نرم‌افزار
         </div>
-        <div style={{ marginTop: 40, fontSize: 28, color: "#4338FF" }}>
-          Building systems, not just software.
+        <div
+          style={{
+            marginTop: 36,
+            fontSize: 26,
+            color: "rgba(0,245,255,0.7)",
+            fontFamily: "monospace",
+          }}
+        >
+          {`${SITE.titleEn} — Tehran, Iran`}
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: "Vazirmatn",
+          data: vazirBold,
+          weight: 700,
+          style: "normal",
+        },
+      ],
+    }
   );
 }

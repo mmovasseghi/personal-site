@@ -1,0 +1,223 @@
+/* هیرو — تمیز، هکر آبی، بدون پورتال سنگین */
+
+.cyber-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 70%, rgba(99, 102, 241, 0.08) 0%, transparent 55%),
+    transparent;
+}
+
+.cyber-hero__grid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(59, 130, 246, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 75%);
+  opacity: 0.5;
+}
+
+.cyber-hero__scan {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(59, 130, 246, 0.02) 3px,
+    rgba(59, 130, 246, 0.02) 4px
+  );
+  pointer-events: none;
+}
+
+.cyber-hero__wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+}
+
+.cyber-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.cyber-hero__terminal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 0.75rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.72rem;
+  color: rgba(129, 140, 248, 0.65);
+  letter-spacing: 0.04em;
+}
+
+.cyber-hero__prompt {
+  color: rgba(96, 165, 250, 0.8);
+}
+
+.cyber-hero__cmd {
+  color: rgba(165, 180, 252, 0.9);
+}
+
+.cyber-hero__out {
+  color: rgba(147, 197, 253, 0.55);
+}
+
+.cyber-hero__signal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  color: rgba(129, 140, 248, 0.55);
+  text-transform: uppercase;
+}
+
+.cyber-hero__live {
+  color: #34d399;
+  font-size: 0.5rem;
+  animation: cyber-pulse 2s ease-in-out infinite;
+}
+
+.cyber-hero__sep {
+  opacity: 0.35;
+}
+
+.cyber-hero__headline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-vazir), sans-serif;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.cyber-hero__line {
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  color: rgba(248, 250, 252, 0.95);
+}
+
+.cyber-hero__line--accent {
+  background: linear-gradient(135deg, #93c5fd 0%, #818cf8 50%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cyber-hero__motto {
+  max-width: 36rem;
+  font-size: 0.95rem;
+  line-height: 1.9;
+  color: rgba(226, 232, 240, 0.55);
+}
+
+.cyber-hero__hook {
+  font-size: 0.88rem;
+  color: rgba(129, 140, 248, 0.7);
+}
+
+.cyber-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.25rem;
+}
+
+.cyber-hero__tag {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid rgba(99, 102, 241, 0.22);
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.06);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: rgba(165, 180, 252, 0.75);
+}
+
+.cyber-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.cyber-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 2px;
+  background: rgba(8, 12, 28, 0.5);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(226, 232, 240, 0.85);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.cyber-hero__btn:hover {
+  border-color: rgba(129, 140, 248, 0.5);
+  background: rgba(99, 102, 241, 0.12);
+  box-shadow: 0 0 24px rgba(99, 102, 241, 0.15);
+}
+
+.cyber-hero__btn--primary {
+  border-color: rgba(96, 165, 250, 0.45);
+  background: rgba(37, 99, 235, 0.18);
+  color: #e0e7ff;
+}
+
+.cyber-hero__scroll {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: rgba(148, 163, 184, 0.45);
+  transition: color 0.2s;
+}
+
+.cyber-hero__scroll:hover {
+  color: rgba(165, 180, 252, 0.75);
+}
+
+.cyber-hero__scroll-arrow {
+  font-size: 1rem;
+  animation: cyber-bounce 2s ease-in-out infinite;
+}
+
+@keyframes cyber-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes cyber-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+@media (max-width: 768px) {
+  .cyber-hero__wrap {
+    padding-top: 5rem;
+  }
+
+  .cyber-hero__motto {
+    font-size: 0.88rem;
+  }
+}

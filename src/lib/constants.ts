@@ -4,25 +4,50 @@ export const SITE = {
   shortName: "mmovasseghi",
   brand: "Personal Site",
   brandFa: "وب‌سایت شخصی",
-  title: "برنامه‌نویس و توسعه‌دهنده نرم‌افزار",
+  title: "توسعه‌دهنده نرم‌افزار",
   titleEn: "Software Developer",
-  tagline: "وب‌اپ و API می‌سازم — از ایده تا اجرا.",
+  tagline: "چیزایی می‌سازم که واقعاً استفاده می‌شن.",
+  heroName: "سینا",
+  heroHeadline1: "هر چیزی که تصورش کنی",
+  heroHeadline2: "قابل ساختنه",
+  heroMotto:
+    "مرز بین ایده و واقعیت، یک پروژه است — من آن را از کد تا سرور زنده می‌کنم.",
+  heroFullName: "محمد سینا موثقی نژاد",
+  heroHook: "ایده را بیاور؛ بقیه‌اش با من.",
+  heroAccess: "ACCESS GRANTED",
+  heroConnecting: "CONNECTING TO NODE",
+  heroSignal: "TEHRAN // IR",
+  heroTag: "NEXUS // DEV",
+  heroStacks: "Python · Next.js · Telegram · Docker",
   mission:
-    "برنامه‌نویس از تهران — پروژه‌های واقعی، کد تمیز، تحویل تا آخر.",
+    "چیزایی می‌سازم که دوست دارم خودم هم ازشون استفاده کنم. اگه پروژه داری یا فقط می‌خوای حرف بزنیم، خوشحال می‌شم پیام بدی.",
   github: "https://github.com/mmovasseghi",
   email: "contact@mmovasseghi.dev",
-  location: "تهران، ایران",
+  phone: "09909777660",
+  phoneIntl: "+989909777660",
+  location: "تهران",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://mmovasseghi.dev",
+  profileImage: "/images/mohammad-sina-movaseghi-nezhad.png",
+  nameVariants: [
+    "محمد سینا موثقی نژاد",
+    "سینا موثقی نژاد",
+    "موثقی نژاد",
+    "محمدسینا موثقی نژاد",
+    "سینا موثقی",
+    "Mohammad Sina Movaseghi Nezhad",
+    "Sina Movaseghi",
+    "mmovasseghi",
+  ],
 };
 
 export const UI = {
   skipLink: "رفتن به محتوا",
   skipBoot: "رد کردن ←",
-  scroll: "اسکرول",
-  explore: "شروع کن",
-  heroGreeting: "سلام — من",
-  heroCtaContact: "تماس",
-  bootTitle: "در حال بارگذاری",
+  scroll: "پایین‌تر",
+  explore: "ببین چی بلدم",
+  heroCtaContact: "حرف بزنیم؟",
+  bootTitle: "NODE INIT",
+  bootSubtitle: "در حال اتصال به سیستم",
   bootReady: "خوش آمدید",
   bootLoading: "لطفاً صبر کنید",
   bootVersion: "mmovasseghi.dev",
@@ -32,15 +57,19 @@ export const UI = {
   summary: "خلاصه",
   competencies: "مهارت‌های اصلی",
   education: "تحصیلات",
-  downloadCv: "دانلود رزومه",
+  downloadCv: "دریافت PDF",
+  downloadCvLoading: "در حال ساخت PDF…",
+  printCv: "چاپ",
+  printBlocked: "مرورگر پاپ‌آپ را مسدود کرد. لطفاً پاپ‌آپ را فعال کنید یا Ctrl+P بزنید.",
   sendEmail: "ارسال ایمیل",
+  callMe: "تماس تلفنی",
   github: "GitHub",
   email: "ایمیل",
   available: "آماده همکاری",
   backToTop: "بازگشت به بالا",
   menuToggle: "منو",
   menuLabel: "منو",
-  resumeNote: "خلاصه‌ای از سوابق کاری من. برای جزئیات بیشتر تماس بگیرید.",
+  resumeNote: "خلاصه سوابق و مهارت‌ها — مستقیم روی سایت.",
   contactTitle: "بیایید",
   contactHighlight: "صحبت کنیم",
   contactDesc:
@@ -86,15 +115,16 @@ export const SECTIONS: Record<
   },
   skills: {
     eyebrow: "مهارت‌ها",
-    title: "چیزهایی که",
-    highlight: "بلدم",
-    subtitle: "حوزه‌هایی که بیشتر وقتمو صرفشان می‌کنم.",
+    title: "بیشتر وقتمو",
+    highlight: "اینا می‌ره",
+    subtitle: "چیزایی که روزانه باهاشون سر و کار دارم.",
     accent: "mint",
   },
   tech: {
     eyebrow: "ابزارها",
     title: "با چه",
     highlight: "تکنولوژی‌هایی کار می‌کنم",
+    subtitle: "همه‌چیز از زبان سیستمی تا وب، دیتابیس و deploy — در یک نگاه.",
     accent: "indigo",
   },
   work: {
@@ -149,41 +179,92 @@ export const ABOUT_POINTS = [
   },
 ];
 
+export const SKILL_CATEGORIES = [
+  {
+    id: "microsoft",
+    title: "Microsoft",
+    color: "#7c3aed",
+    items: ["C", "C++", "C#", "ASP.NET", ".NET", "F#"],
+  },
+  {
+    id: "web",
+    title: "Web Stack",
+    color: "#06b6d4",
+    items: ["Python", "PHP", "Java", "Node", "FastAPI", "Laravel"],
+  },
+  {
+    id: "data",
+    title: "Data & Script",
+    color: "#3b82f6",
+    items: ["R", "Lua", "Julia", "Perl", "Scala", "Bash"],
+  },
+  {
+    id: "systems",
+    title: "Systems",
+    color: "#475569",
+    items: ["Rust", "Go", "Kotlin", "Swift", "Dart", "Zig"],
+  },
+];
+
+export const ALL_SKILLS = [
+  "C", "C++", "C#", "Rust", "Go", ".NET", "ASP.NET", "F#", "Zig", "Assembly",
+  "Python", "PHP", "Java", "Kotlin", "Ruby", "Node.js", "FastAPI", "Laravel", "Django", "Spring",
+  "JavaScript", "TypeScript", "React", "Next.js", "Vue", "Angular", "Swift", "Dart", "Flutter", "Tailwind",
+  "R", "Lua", "Perl", "Scala", "Haskell", "Elixir", "Erlang", "Julia", "MATLAB", "Bash", "PowerShell",
+  "PostgreSQL", "MySQL", "MongoDB", "Redis", "Docker", "Nginx", "Linux", "Git", "Telegram", "Mini App",
+  "HTML", "CSS", "SASS", "GraphQL", "REST", "WebSocket", "systemd", "VPS", "SSL", "CI/CD",
+];
+
+export const DELIVERABLES = {
+  title: "What I deliver",
+  tagline: "End-to-end product builder | Tehran, Iran",
+  left: [
+    "Full architecture and clean code",
+    "Backend APIs, bots, mini apps, admin panels",
+    "Payments, automation, database design",
+  ],
+  right: [
+    "Modern frontend with premium UX",
+    "Docker, Nginx, VPS deploy, monitoring",
+    "Security: auth, HTTPS, secrets hardening",
+  ],
+};
+
 export const CAPABILITIES = [
   {
     symbol: "⬢",
-    title: "توسعه بک‌اند",
-    desc: "ساخت API و منطق برنامه — FastAPI، ASP.NET و پایتون.",
+    title: "بک‌اند و API",
+    desc: "منطق اصلی برنامه — API با پایتون، FastAPI و ASP.NET.",
     tech: ["Python", "FastAPI", "ASP.NET", "REST API"],
   },
   {
     symbol: "⬡",
-    title: "اپلیکیشن وب",
-    desc: "فرانت‌اند مدرن با React و Next.js.",
+    title: "وب‌اپ",
+    desc: "رابط کاربری با React و Next.js — سریع و قابل نگهداری.",
     tech: ["React", "Next.js", "TypeScript"],
   },
   {
     symbol: "□",
-    title: "سرور و Deploy",
-    desc: "راه‌اندازی سرور، Docker، Nginx و انتشار پروژه.",
+    title: "سرور و انتشار",
+    desc: "راه‌اندازی سرور، Docker، Nginx و publish کردن پروژه.",
     tech: ["Docker", "Linux", "Nginx", "CI/CD"],
   },
   {
     symbol: "◎",
     title: "تلگرام و اتوماسیون",
-    desc: "Mini App، بات و خودکارسازی کارهای تکراری.",
+    desc: "Mini App، ربات تلگرام و خودکار کردن کارهای تکراری.",
     tech: ["Telegram Mini App", "Bots", "Automation"],
   },
   {
     symbol: "◈",
     title: "دیتابیس",
-    desc: "طراحی و کار با PostgreSQL، Redis و migration.",
+    desc: "طراحی دیتابیس، migration و کار با PostgreSQL و Redis.",
     tech: ["PostgreSQL", "Redis", "SQL"],
   },
   {
     symbol: "△",
-    title: "امنیت پایه",
-    desc: "ورود کاربر، دسترسی‌ها و نگه‌داری امن اطلاعات.",
+    title: "ورود و امنیت",
+    desc: "سیستم لاگین، سطح دسترسی و نگه‌داری امن اطلاعات کاربر.",
     tech: ["JWT", "OAuth", "Auth"],
   },
 ];
@@ -198,34 +279,44 @@ export const EXPERIENCE = [
 ];
 
 export const TECH_RADAR = {
-  core: {
-    label: "هر روز",
-    items: ["Python", "JavaScript", "Docker", "React", "FastAPI"],
+  languages: {
+    label: "Programming Languages",
+    items: [
+      "C", "C++", "C#", "Rust", "Go", ".NET", "ASP.NET", "F#", "Zig", "Assembly",
+      "Python", "PHP", "Java", "Kotlin", "Ruby", "Node.js", "FastAPI", "Laravel", "Django", "Spring",
+      "JavaScript", "TypeScript", "React", "Next.js", "Vue", "Angular", "Swift", "Dart", "Flutter", "Tailwind",
+      "R", "Lua", "Perl", "Scala", "Haskell", "Elixir", "Erlang", "Julia", "MATLAB", "Bash", "PowerShell",
+    ],
   },
-  advanced: {
-    label: "بلدم",
-    items: ["Next.js", "ASP.NET", "PostgreSQL", "Redis", "Linux"],
-  },
-  working: {
-    label: "گاهی",
-    items: ["Go", "PHP", "Flutter", "Java"],
-  },
-  exploring: {
-    label: "در حال یادگیری",
-    items: ["Rust", "Tauri", "Local AI"],
+  infra: {
+    label: "Infrastructure & Data",
+    items: [
+      "PostgreSQL", "MySQL", "MongoDB", "Redis", "Docker", "Nginx", "Linux", "Git",
+      "Telegram", "Mini App", "HTML", "CSS", "SASS", "GraphQL", "REST", "WebSocket",
+      "systemd", "VPS", "SSL", "CI/CD",
+    ],
   },
 };
 
 export const BOOT_STAGES = [
-  { label: "بارگذاری...", progress: 30 },
-  { label: "آماده‌سازی", progress: 60 },
-  { label: "خوش آمدید", progress: 100 },
+  { label: "اتصال به نود...", progress: 12 },
+  { label: "بارگذاری ماژول‌ها", progress: 32 },
+  { label: "همگام‌سازی داده", progress: 52 },
+  { label: "فعال‌سازی لایه‌ها", progress: 76 },
+  { label: "آماده ورود", progress: 100 },
 ];
 
 export const BOOT_LOGS = [
+  "> INIT sequence: mmovasseghi.node",
+  "> LOCALE........ Tehran, IR",
+  "> PYTHON_STACK .. [OK]",
+  "> NEXT_RUNTIME .. [OK]",
+  "> DOCKER_LAYER .. [OK]",
+  "> GITHUB_SYNC ... connected",
   "> محمد سینا موثقی نژاد",
-  "> برنامه‌نویس — تهران",
-  "> mmovasseghi.dev",
+  "> ROLE.......... Software Developer",
+  "> ACCESS_LAYER .. READY",
+  "> Awaiting user entry...",
 ];
 
 export const NAV_ITEMS = [
@@ -233,19 +324,20 @@ export const NAV_ITEMS = [
   { href: "#about", label: "درباره من" },
   { href: "#skills", label: "مهارت‌ها" },
   { href: "#work", label: "نمونه کار" },
+  { href: "#resume", label: "رزومه" },
   { href: "#contact", label: "تماس" },
 ];
 
 export const RESUME = {
   summary:
-    "محمد سینا موثقی نژاد — برنامه‌نویس و توسعه‌دهنده نرم‌افزار در تهران. تجربه در ساخت API، اپلیکیشن وب، پروژه‌های تلگرام، راه‌اندازی سرور و deploy. علاقه‌مند به ساخت محصولات تمیز و قابل اعتماد.",
+    "محمد سینا موثقی نژاد — برنامه‌نویس و توسعه‌دهنده نرم‌افزار در تهران. مسلط به زبان‌ها و فریم‌ورک‌های متنوع از C/C++/C# تا Python، Java، Rust، Go و اکوسیستم وب مدرن. تجربه در ساخت API، اپلیکیشن وب، پروژه‌های تلگرام، راه‌اندازی سرور و deploy.",
   highlights: [
-    "توسعه API و بک‌اند با Python و FastAPI",
-    "ساخت اپلیکیشن وب با React و Next.js",
-    "پروژه‌های Telegram Mini App و commerce",
-    "راه‌اندازی سرور با Docker، Nginx و Linux",
-    "پیاده‌سازی ورود کاربر و امنیت پایه",
-    "اتوماسیون و یکپارچه‌سازی AI در پروژه‌ها",
+    "Full architecture and clean code",
+    "Backend APIs, bots, mini apps, admin panels",
+    "Payments, automation, database design",
+    "Modern frontend with premium UX",
+    "Docker, Nginx, VPS deploy, monitoring",
+    "Security: auth, HTTPS, secrets hardening",
   ],
   education: "یادگیری عملی از طریق ساخت پروژه‌های واقعی",
 };
@@ -334,6 +426,24 @@ export const HERO_TAGS = [
   "Docker",
   "Telegram",
   "API",
+];
+
+export const HERO_BOOT_LINES = [
+  { type: "cmd" as const, text: "system.init --user=sina" },
+  { type: "out" as const, text: "[OK] kernel loaded" },
+  { type: "cmd" as const, text: "whoami" },
+  { type: "out" as const, text: "sina // software developer" },
+  { type: "cmd" as const, text: "cat location" },
+  { type: "out" as const, text: "tehran, ir — utc+3:30" },
+  { type: "cmd" as const, text: "status --check" },
+  { type: "out" as const, text: "[ONLINE] ready for projects" },
+];
+
+export const HERO_STATS = [
+  { id: "stack", label: "STACK", value: "Python", icon: "⬢" },
+  { id: "web", label: "WEB", value: "Next.js", icon: "⬡" },
+  { id: "bot", label: "BOT", value: "Telegram", icon: "◎" },
+  { id: "ops", label: "OPS", value: "Docker", icon: "□" },
 ];
 export const IDENTITY_STATEMENTS = ABOUT_INTRO.map((line) => ({
   line,

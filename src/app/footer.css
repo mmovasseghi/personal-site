@@ -1,0 +1,148 @@
+/* فوتر — مینیمال، هماهنگ با کرسر و تم سایت */
+
+.site-footer {
+  position: relative;
+  z-index: 10;
+  margin-top: 3rem;
+  padding: 3rem 0 2rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(6, 11, 20, 0.85) 30%, #060b14 100%);
+  border-top: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+.site-footer__line {
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(129, 140, 248, 0.4), transparent);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.site-footer__top {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .site-footer__top {
+    grid-template-columns: 1.4fr 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.site-footer__name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.92);
+}
+
+.site-footer__role {
+  margin-top: 0.35rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: rgba(129, 140, 248, 0.55);
+}
+
+.site-footer__mission {
+  margin-top: 0.75rem;
+  max-width: 28rem;
+  font-size: 0.85rem;
+  line-height: 1.85;
+  color: rgba(226, 232, 240, 0.45);
+}
+
+.site-footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.site-footer__nav-link {
+  font-size: 0.88rem;
+  color: rgba(226, 232, 240, 0.55);
+  transition: color 0.2s;
+}
+
+.site-footer__nav-link:hover {
+  color: rgba(165, 180, 252, 0.9);
+}
+
+.site-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.site-footer__link {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.72rem;
+  color: rgba(147, 197, 253, 0.65);
+  transition: color 0.2s;
+}
+
+.site-footer__link:hover {
+  color: #93c5fd;
+}
+
+.site-footer__skills-label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(129, 140, 248, 0.45);
+}
+
+.site-footer__skills-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+}
+
+.site-footer__skill {
+  padding: 0.25rem 0.55rem;
+  border: 1px solid rgba(99, 102, 241, 0.18);
+  border-radius: 999px;
+  background: rgba(99, 102, 241, 0.05);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.58rem;
+  color: rgba(165, 180, 252, 0.65);
+}
+
+.site-footer__skill--more {
+  border-style: dashed;
+  color: rgba(129, 140, 248, 0.45);
+}
+
+.site-footer__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.site-footer__copy {
+  font-size: 0.78rem;
+  color: rgba(148, 163, 184, 0.4);
+}
+
+.site-footer__back {
+  font-size: 0.78rem;
+  color: rgba(129, 140, 248, 0.55);
+  transition: color 0.2s;
+}
+
+a.site-footer__back:hover {
+  color: rgba(165, 180, 252, 0.85);
+}

@@ -1,0 +1,421 @@
+/* هیرو NODE — ورود سینمایی، تمام‌صفحه، بدون کارت */
+
+.hero-node {
+  position: relative;
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 5.5rem 0 6.5rem;
+}
+
+.hero-node__scan {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(59, 130, 246, 0.02) 2px,
+    rgba(59, 130, 246, 0.02) 4px
+  );
+}
+
+.hero-node__scan::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.45), transparent);
+  animation: hero-node-scan 5s linear infinite;
+}
+
+@keyframes hero-node-scan {
+  0% { top: -2%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { top: 102%; opacity: 0; }
+}
+
+.hero-node__grid-floor {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: 0;
+  height: 42%;
+  z-index: 0;
+  transform: perspective(500px) rotateX(68deg);
+  transform-origin: center bottom;
+  background:
+    linear-gradient(rgba(59, 130, 246, 0.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.14) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, transparent, #000 35%, #000 90%, transparent);
+  opacity: 0.45;
+}
+
+.hero-node__wrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.hero-node__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+/* باینری کناره */
+.hero-binary {
+  position: absolute;
+  top: 12%;
+  bottom: 18%;
+  z-index: 2;
+  display: flex;
+  gap: 0.55rem;
+  opacity: 0.35;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+}
+
+.hero-binary--left {
+  left: 1.25rem;
+}
+
+.hero-binary--right {
+  right: 1.25rem;
+}
+
+.hero-binary__col {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  line-height: 1.15;
+  color: rgba(96, 165, 250, 0.55);
+  white-space: pre;
+  animation: hero-binary-fall linear infinite;
+}
+
+@keyframes hero-binary-fall {
+  0% { transform: translateY(-12%); }
+  100% { transform: translateY(12%); }
+}
+
+/* رادار */
+.hero-radar {
+  position: relative;
+  width: min(260px, 62vw);
+  height: min(260px, 62vw);
+  margin-bottom: 0.5rem;
+}
+
+.hero-radar__svg {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-radar__core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 88px;
+  height: 88px;
+  margin: -44px 0 0 -44px;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.35), rgba(4, 10, 22, 0.9));
+  box-shadow:
+    0 0 40px rgba(59, 130, 246, 0.35),
+    inset 0 0 24px rgba(59, 130, 246, 0.15);
+}
+
+.hero-radar__core span {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #e0f2fe;
+}
+
+/* متن */
+.hero-node__copy {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+}
+
+.hero-node__boot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.hero-node__boot-label {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: rgba(147, 197, 253, 0.55);
+}
+
+.hero-node__boot-bar {
+  width: min(240px, 70vw);
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(59, 130, 246, 0.15);
+  overflow: hidden;
+}
+
+.hero-node__boot-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #2563eb, #38bdf8);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+}
+
+.hero-node__access {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: clamp(0.85rem, 3vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  color: #34d399;
+  text-shadow: 0 0 24px rgba(52, 211, 153, 0.45);
+}
+
+.hero-node__signal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.35rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: rgba(147, 197, 253, 0.45);
+}
+
+.hero-node__signal span {
+  color: #34d399;
+}
+
+.hero-node__signal em {
+  font-style: normal;
+  opacity: 0.4;
+}
+
+.hero-node__name {
+  margin: 0;
+  font-size: clamp(4rem, 18vw, 7.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+.hero-node__fullname {
+  margin: 0.4rem 0 0;
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+  color: rgba(148, 163, 184, 0.65);
+}
+
+.hero-node__role {
+  margin: 0.35rem 0 0;
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  font-weight: 600;
+  color: #93c5fd;
+}
+
+.hero-node__hook {
+  margin: 0.85rem auto 0;
+  max-width: 22rem;
+  font-size: clamp(1.05rem, 4vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.55;
+  color: #e2e8f0;
+}
+
+/* گلیچ */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  color: #f8fafc;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.glitch-text::before {
+  color: #38bdf8;
+  animation: hero-glitch-a 3.2s infinite linear;
+  text-shadow: -2px 0 #3b82f6;
+}
+
+.glitch-text::after {
+  color: #818cf8;
+  animation: hero-glitch-b 2.6s infinite linear;
+  text-shadow: 2px 0 #2563eb;
+}
+
+@keyframes hero-glitch-a {
+  0%, 90%, 100% { clip-path: inset(0 0 94% 0); transform: translateX(0); }
+  92% { clip-path: inset(20% 0 55% 0); transform: translateX(-2px); }
+}
+
+@keyframes hero-glitch-b {
+  0%, 88%, 100% { clip-path: inset(94% 0 0 0); transform: translateX(0); }
+  90% { clip-path: inset(55% 0 15% 0); transform: translateX(2px); }
+}
+
+/* اکشن */
+.hero-node__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 1.35rem;
+  width: 100%;
+  max-width: 20rem;
+  margin-inline: auto;
+}
+
+.hero-node__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 3rem;
+  padding: 0 1.4rem;
+  border-radius: 0.35rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hero-node__btn--primary {
+  color: #fff;
+  background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+  border: 1px solid rgba(147, 197, 253, 0.35);
+  box-shadow: 0 0 28px rgba(37, 99, 235, 0.4);
+}
+
+.hero-node__btn--ghost {
+  color: rgba(226, 232, 240, 0.88);
+  background: rgba(6, 12, 24, 0.65);
+  border: 1px solid rgba(96, 165, 250, 0.28);
+}
+
+/* تگ‌های شناور */
+.hero-node__orbit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1.5rem;
+}
+
+.hero-node__orbit-tag {
+  padding: 0.28rem 0.6rem;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 999px;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: rgba(147, 197, 253, 0.65);
+  background: rgba(8, 14, 28, 0.55);
+}
+
+/* اسکرول */
+.hero-node__scroll {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 50%;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  transform: translateX(-50%);
+  font-family: var(--font-jetbrains), monospace;
+}
+
+.hero-node__scroll span:first-child {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  color: rgba(96, 165, 250, 0.4);
+}
+
+.hero-node__scroll-bar {
+  display: block;
+  width: 1px;
+  height: 1.75rem;
+  background: linear-gradient(180deg, #60a5fa, transparent);
+}
+
+.hero-node__scroll span:last-child {
+  font-size: 0.68rem;
+  color: rgba(148, 163, 184, 0.55);
+}
+
+@media (min-width: 768px) {
+  .hero-node__actions {
+    flex-direction: row;
+    justify-content: center;
+    max-width: none;
+    width: auto;
+  }
+
+  .hero-node__btn {
+    min-width: 10.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-node {
+    padding-top: 5.75rem;
+    padding-bottom: 6rem;
+  }
+
+  .hero-radar {
+    width: min(220px, 58vw);
+    height: min(220px, 58vw);
+  }
+
+  .hero-radar__core {
+    width: 72px;
+    height: 72px;
+    margin: -36px 0 0 -36px;
+  }
+
+  .hero-radar__core span {
+    font-size: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-node__scan::after,
+  .hero-binary__col,
+  .glitch-text::before,
+  .glitch-text::after {
+    animation: none;
+  }
+}

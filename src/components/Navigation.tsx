@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { NAV_ITEMS, UI } from "@/lib/constants";
+import { NAV_ITEMS, SITE, UI } from "@/lib/constants";
+import { navHrefForSection, detectActiveSection } from "@/lib/section-spy";
+import { subscribePageScroll } from "@/lib/scroll-events";
 import Logo from "./Logo";
+import { cinematicEase } from "@/lib/motion";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
@@ -11,24 +14,14 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const sections = NAV_ITEMS.map((item) => item.href.slice(1));
-
     const onScroll = () => {
       setScrolled(window.scrollY > 50);
-
-      const scrollPos = window.scrollY + 120;
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el && el.offsetTop <= scrollPos) {
-          setActive(`#${sections[i]}`);
-          break;
-        }
-      }
+      const section = detectActiveSection();
+      setActive(navHrefForSection(section));
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return subscribePageScroll(onScroll);
   }, []);
 
   useEffect(() => {
@@ -45,13 +38,6 @@ export default function Navigation() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const menu = document.getElementById("mobile-nav");
-    const firstLink = menu?.querySelector("a") as HTMLElement | null;
-    firstLink?.focus();
   }, [open]);
 
   return (
@@ -94,12 +80,13 @@ export default function Navigation() {
 
           <button
             type="button"
-            className="glass px-3 py-2 font-mono text-xs lg:hidden"
-            onClick={() => setOpen(!open)}
+            className="nav-menu-btn lg:hidden"
+            onClick={() => setOpen(true)}
             aria-label={UI.menuToggle}
             aria-expanded={open}
           >
-            {open ? "✕" : "≡"}
+            <span className="nav-menu-btn__line" />
+            <span className="nav-menu-btn__line" />
           </button>
         </div>
       </motion.nav>
@@ -108,31 +95,64 @@ export default function Navigation() {
         {open && (
           <motion.div
             id="mobile-nav"
-            className="fixed inset-0 z-[9994] flex flex-col items-center justify-center bg-void/95 backdrop-blur-xl lg:hidden"
+            className="nav-sheet"
             role="dialog"
             aria-modal="true"
             aria-label={UI.menuLabel}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
           >
-            <nav className="flex flex-col items-center gap-8">
-              {NAV_ITEMS.map((item, i) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  className={`font-display text-2xl font-semibold ${
-                    active === item.href ? "rgb-text" : "text-white/60"
-                  }`}
+            <motion.div
+              className="nav-sheet__panel"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.32, ease: cinematicEase }}
+            >
+              <div className="nav-sheet__top">
+                <Logo showLabel />
+                <button
+                  type="button"
+                  className="nav-sheet__close"
                   onClick={() => setOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
+                  aria-label={UI.menuToggle}
+                  data-cursor-hover
                 >
-                  {item.label}
-                </motion.a>
-              ))}
-            </nav>
+                  بستن
+                </button>
+              </div>
+
+              <nav className="nav-sheet__links">
+                {NAV_ITEMS.map((item, i) => (
+                  <motion.a
+                    key={item.href}
+                    href={item.href}
+                    className={`nav-sheet__link fa-text${
+                      active === item.href ? " nav-sheet__link--on" : ""
+                    }`}
+                    onClick={() => setOpen(false)}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.04 + i * 0.05, ease: cinematicEase }}
+                    data-cursor-hover
+                  >
+                    {item.label}
+                  </motion.a>
+                ))}
+              </nav>
+
+              <p className="nav-sheet__foot ltr-block">
+                {SITE.shortName} · {SITE.heroSignal}
+              </p>
+            </motion.div>
+            <button
+              type="button"
+              className="nav-sheet__backdrop"
+              onClick={() => setOpen(false)}
+              aria-label={UI.menuToggle}
+            />
           </motion.div>
         )}
       </AnimatePresence>

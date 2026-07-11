@@ -20,7 +20,7 @@ export default function CaseStudies() {
               className="glass-edge glass overflow-hidden backlight"
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
+              viewport={{ once: true, margin: "-8% 0px" }}
               transition={{ delay: i * 0.08 }}
             >
               <button

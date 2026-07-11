@@ -1,47 +1,56 @@
-import { RESUME, SITE, TECH_RADAR, UI, SECTIONS } from "./constants";
+import { SKILL_CATEGORIES, UI } from "./constants";
+import {
+  buildPdfFromJpeg,
+  captureElementAsJpeg,
+  downloadBlob,
+  printElement,
+} from "./pdf-export";
 
-export function generateResumeText(): string {
-  const lines = [
-    SITE.nameFa.toUpperCase(),
-    SITE.title,
-    SITE.location,
-    SITE.email,
-    SITE.github,
-    "",
-    UI.summary.toUpperCase(),
-    "─".repeat(40),
-    RESUME.summary,
-    "",
-    UI.competencies.toUpperCase(),
-    "─".repeat(40),
-    ...RESUME.highlights.map((h) => `• ${h}`),
-    "",
-    `${SECTIONS.tech.title} ${SECTIONS.tech.highlight}`.toUpperCase(),
-    "─".repeat(40),
-    ...Object.entries(TECH_RADAR).map(
-      ([, { label, items }]) => `${label}: ${items.join(", ")}`
-    ),
-    "",
-    UI.education.toUpperCase(),
-    "─".repeat(40),
-    RESUME.education,
-    "",
-    "─".repeat(40),
-    SITE.tagline.replace("\n", " — "),
-  ];
+export const RESUME_SKILLS = SKILL_CATEGORIES.flatMap((cat) =>
+  cat.items.map((name) => ({
+    name,
+    level: 85,
+    category: cat.title,
+  }))
+);
 
-  return lines.join("\n");
+export const RESUME_FILENAME = "Mohammad_Sina_Movaseghi_Nezhad_Resume.pdf";
+
+export async function downloadResumePdf(
+  elementId = "resume-dossier-export"
+): Promise<void> {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  const hidden = el.querySelectorAll<HTMLElement>("[data-resume-export-hide]");
+  hidden.forEach((node) => {
+    node.style.display = "none";
+  });
+
+  try {
+    const { data, width, height } = await captureElementAsJpeg(el, 2);
+    const blob = buildPdfFromJpeg(data, width, height);
+    downloadBlob(blob, RESUME_FILENAME);
+  } catch {
+    printElement(el);
+  } finally {
+    hidden.forEach((node) => {
+      node.style.display = "";
+    });
+  }
 }
 
+export function printResume(elementId = "resume-dossier-export"): boolean {
+  const el = document.getElementById(elementId);
+  if (!el) return false;
+  const ok = printElement(el);
+  if (!ok) {
+    window.alert(UI.printBlocked);
+  }
+  return ok;
+}
+
+/** @deprecated */
 export function downloadResume(): void {
-  const text = generateResumeText();
-  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "Mohammad_Sina_Movaseghi_Nezhad_Resume.txt";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  void downloadResumePdf();
 }

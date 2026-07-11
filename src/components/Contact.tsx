@@ -41,6 +41,16 @@ export default function Contact() {
             </motion.a>
 
             <motion.a
+              href={`tel:${SITE.phoneIntl}`}
+              className="fa-text glass-edge glass w-full rounded-lg px-8 py-3 text-center font-body text-sm font-medium text-white/70 transition-colors hover:text-cyan sm:w-auto"
+              data-cursor-hover
+              whileHover={{ scale: 1.04, y: -3 }}
+              whileTap={{ scale: 0.96 }}
+            >
+              {UI.callMe}
+            </motion.a>
+
+            <motion.a
               href={SITE.github}
               target="_blank"
               rel="noopener noreferrer"
@@ -51,6 +61,14 @@ export default function Contact() {
               {UI.github} ←
             </motion.a>
           </div>
+
+          <a
+            href={`tel:${SITE.phoneIntl}`}
+            className="ltr-block mt-6 inline-block font-mono text-sm tracking-wider text-cyan/70 transition-colors hover:text-cyan"
+            data-cursor-hover
+          >
+            {SITE.phone}
+          </a>
 
           <div className="fa-text mt-12 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 font-body text-xs text-white/20">
             <span>{SITE.location}</span>

@@ -1,0 +1,550 @@
+/* رزومه — dossier هکری با انیمیشن */
+
+.resume-dossier {
+  position: relative;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(67, 56, 255, 0.22);
+  background:
+    linear-gradient(155deg, rgba(10, 16, 32, 0.94) 0%, rgba(6, 11, 22, 0.98) 55%, rgba(8, 14, 28, 0.96) 100%);
+  box-shadow:
+    0 0 0 1px rgba(0, 245, 255, 0.04) inset,
+    0 24px 70px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .resume-dossier {
+    padding: 1.85rem 2.1rem;
+  }
+}
+
+.resume-dossier::before,
+.resume-dossier::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(0, 245, 255, 0.32);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.resume-dossier::before {
+  top: 12px;
+  right: 12px;
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.resume-dossier::after {
+  bottom: 12px;
+  left: 12px;
+  border-width: 0 0 1.5px 1.5px;
+}
+
+.resume-dossier__scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 245, 255, 0.012) 3px,
+    rgba(0, 245, 255, 0.012) 4px
+  );
+}
+
+.resume-dossier__glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  width: 70%;
+  height: 60%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse, rgba(67, 56, 255, 0.14) 0%, transparent 70%);
+  animation: resume-glow-drift 8s ease-in-out infinite alternate;
+}
+
+@keyframes resume-glow-drift {
+  0% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0.85; transform: translateX(-48%) translateY(12px); }
+}
+
+/* ── Header strip ── */
+
+.resume-dossier__strip {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.25rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+.resume-dossier__identity {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex: 1 1 12rem;
+}
+
+.resume-dossier__avatar {
+  position: relative;
+  width: 3.4rem;
+  height: 3.4rem;
+  flex-shrink: 0;
+}
+
+.resume-dossier__avatar-ring {
+  position: absolute;
+  inset: -3px;
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  border-radius: 50%;
+  animation: resume-ring-spin 12s linear infinite;
+}
+
+.resume-dossier__avatar-ring::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: #00f5ff;
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.7);
+}
+
+@keyframes resume-ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+.resume-dossier__avatar-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(135deg, #4338ff, #00f5ff, #45ffb2);
+  box-shadow:
+    0 0 18px rgba(67, 56, 255, 0.35),
+    0 0 36px rgba(0, 245, 255, 0.12);
+}
+
+.resume-dossier__avatar-img-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #060b14;
+}
+
+.resume-dossier__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(1) sepia(0.2) saturate(2.8) hue-rotate(195deg) brightness(0.88) contrast(1.08);
+}
+
+.resume-dossier__avatar-tint {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    160deg,
+    rgba(67, 56, 255, 0.25) 0%,
+    transparent 45%,
+    rgba(0, 245, 255, 0.15) 100%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.resume-dossier__avatar-scan {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 245, 255, 0.05) 2px,
+    rgba(0, 245, 255, 0.05) 3px
+  );
+  pointer-events: none;
+}
+
+.resume-dossier__name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(248, 250, 252, 0.94);
+}
+
+.resume-dossier__role {
+  margin-top: 0.2rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: rgba(129, 140, 248, 0.55);
+}
+
+.resume-dossier__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+}
+
+.resume-dossier__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid rgba(69, 255, 178, 0.25);
+  background: rgba(69, 255, 178, 0.06);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(69, 255, 178, 0.85);
+}
+
+.resume-dossier__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #45ffb2;
+  box-shadow: 0 0 8px rgba(69, 255, 178, 0.8);
+  animation: resume-pulse 2s ease-in-out infinite;
+}
+
+@keyframes resume-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+
+.resume-dossier__file {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  color: rgba(129, 140, 248, 0.4);
+}
+
+.resume-dossier__actions {
+  margin-right: auto;
+}
+
+.resume-dossier__btn {
+  padding: 0.42rem 0.9rem;
+  border: 1px solid rgba(0, 245, 255, 0.28);
+  background: rgba(0, 245, 255, 0.06);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(165, 243, 252, 0.9);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.resume-dossier__btn:hover {
+  border-color: rgba(0, 245, 255, 0.5);
+  background: rgba(0, 245, 255, 0.12);
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.15);
+}
+
+/* ── Summary ── */
+
+.resume-dossier__summary {
+  position: relative;
+  z-index: 2;
+  margin: 1.15rem 0 0;
+  padding: 0.85rem 1rem 0.85rem 2.25rem;
+  border-right: 2px solid rgba(0, 245, 255, 0.35);
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.04), transparent);
+  font-size: 0.86rem;
+  line-height: 1.9;
+  color: rgba(226, 232, 240, 0.62);
+}
+
+.resume-dossier__summary-mark {
+  position: absolute;
+  top: 0.15rem;
+  right: 0.65rem;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: rgba(0, 245, 255, 0.25);
+  font-family: Georgia, serif;
+}
+
+/* ── Skill clusters ── */
+
+.resume-dossier__clusters {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+}
+
+@media (min-width: 640px) {
+  .resume-dossier__clusters {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+  }
+}
+
+.resume-dossier__cluster {
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(4, 8, 18, 0.55);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.resume-dossier__cluster:hover {
+  border-color: color-mix(in srgb, var(--cluster-color) 35%, transparent);
+  box-shadow: 0 0 28px color-mix(in srgb, var(--cluster-color) 12%, transparent);
+}
+
+.resume-dossier__cluster-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.resume-dossier__cluster-index {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: var(--cluster-color);
+  opacity: 0.7;
+}
+
+.resume-dossier__cluster-title {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(226, 232, 240, 0.75);
+}
+
+.resume-dossier__cluster-bar {
+  flex: 1;
+  height: 2px;
+  margin-right: 0.25rem;
+  transform-origin: right center;
+  background: linear-gradient(90deg, transparent, var(--cluster-color));
+  opacity: 0.55;
+}
+
+.resume-dossier__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resume-dossier__tag {
+  padding: 0.18rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--cluster-color) 28%, transparent);
+  background: color-mix(in srgb, var(--cluster-color) 8%, transparent);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.58rem;
+  color: rgba(203, 213, 225, 0.72);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resume-dossier__cluster:hover .resume-dossier__tag {
+  box-shadow: 0 0 10px color-mix(in srgb, var(--cluster-color) 10%, transparent);
+}
+
+/* ── Grid panels ── */
+
+.resume-dossier__grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.35rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (min-width: 768px) {
+  .resume-dossier__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.resume-dossier__panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.78);
+  margin-bottom: 0.75rem;
+}
+
+.resume-dossier__panel-glyph {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.7rem;
+  color: rgba(0, 245, 255, 0.45);
+}
+
+/* Timeline */
+
+.resume-dossier__timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.resume-dossier__timeline::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  right: 1.05rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 245, 255, 0.45),
+    rgba(67, 56, 255, 0.2) 50%,
+    transparent
+  );
+}
+
+.resume-dossier__timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding-right: 0.25rem;
+}
+
+.resume-dossier__timeline-node {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 1.65rem;
+  height: 1.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  background: rgba(6, 11, 22, 0.9);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: rgba(0, 245, 255, 0.75);
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.12);
+}
+
+.resume-dossier__timeline-text {
+  flex: 1;
+  min-width: 0;
+  padding-top: 0.2rem;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: rgba(203, 213, 225, 0.58);
+}
+
+/* Highlights */
+
+.resume-dossier__highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.resume-dossier__highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(99, 102, 241, 0.14);
+  background: rgba(8, 12, 24, 0.6);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.resume-dossier__highlight:hover {
+  border-color: rgba(0, 245, 255, 0.22);
+}
+
+.resume-dossier__highlight-icon {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: rgba(0, 245, 255, 0.55);
+  padding-top: 0.1rem;
+}
+
+.resume-dossier__highlight-text {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: rgba(203, 213, 225, 0.6);
+}
+
+/* ── Footer ── */
+
+.resume-dossier__foot {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 1.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  color: rgba(129, 140, 248, 0.55);
+}
+
+.resume-dossier__foot a {
+  position: relative;
+  transition: color 0.2s;
+}
+
+.resume-dossier__foot a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background: rgba(0, 245, 255, 0.5);
+  transition: width 0.25s ease;
+}
+
+.resume-dossier__foot a:hover {
+  color: rgba(165, 243, 252, 0.9);
+}
+
+.resume-dossier__foot a:hover::after {
+  width: 100%;
+}
+
+.resume-dossier__foot-cta {
+  font-family: var(--font-vazir), sans-serif;
+  margin-right: auto;
+}

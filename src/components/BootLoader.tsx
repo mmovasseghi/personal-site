@@ -18,6 +18,7 @@ interface BootLoaderProps {
 const STAGE_MS = 650;
 const INITIAL_DELAY = 400;
 const ORBIT_COUNT = 12;
+const LOG_SLOTS = 3;
 
 const PARTICLES = Array.from({ length: 24 }, (_, i) => ({
   id: i,
@@ -65,34 +66,22 @@ function OrbitalRings({ progress }: { progress: number }) {
 
   return (
     <div className="absolute left-1/2 top-1/2 h-[200px] w-[200px] -translate-x-1/2 -translate-y-1/2">
-      {/* Outer dashed ring — counter-clockwise */}
       <motion.div
         className="absolute inset-0 rounded-full border border-dashed border-cyan/15"
         animate={{ rotate: -360 }}
         transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
       />
-
-      {/* Middle ring — clockwise */}
       <motion.div
         className="absolute inset-3 rounded-full border border-indigo/25"
         animate={{ rotate: 360 }}
         transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
       />
-
-      {/* Pulse ring */}
       <motion.div
         className="absolute inset-6 rounded-full border border-cyan/20"
         animate={{ scale: [1, 1.06, 1], opacity: [0.3, 0.7, 0.3] }}
         transition={{ duration: 2.5, repeat: Infinity }}
       />
-
-      {/* SVG progress */}
-      <svg
-        className="absolute inset-0"
-        width={200}
-        height={200}
-        viewBox="0 0 200 200"
-      >
+      <svg className="absolute inset-0" width={200} height={200} viewBox="0 0 200 200">
         <circle
           cx="100"
           cy="100"
@@ -122,8 +111,6 @@ function OrbitalRings({ progress }: { progress: number }) {
           </linearGradient>
         </defs>
       </svg>
-
-      {/* Orbital dots */}
       {Array.from({ length: ORBIT_COUNT }).map((_, i) => (
         <motion.div
           key={i}
@@ -147,6 +134,12 @@ function OrbitalRings({ progress }: { progress: number }) {
           />
         </motion.div>
       ))}
+      <motion.div
+        className="absolute left-1/2 top-1/2 h-[55%] w-[2px] -translate-x-1/2 origin-bottom bg-gradient-to-t from-cyan/60 to-transparent"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}
+        style={{ transformOrigin: "50% 100%" }}
+      />
     </div>
   );
 }
@@ -259,13 +252,15 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
   }, []);
 
   const visibleLogs = useMemo(
-    () => [
-      BOOT_LOGS[logIndex % BOOT_LOGS.length],
-      BOOT_LOGS[(logIndex + 1) % BOOT_LOGS.length],
-      BOOT_LOGS[(logIndex + 2) % BOOT_LOGS.length],
-    ],
+    () =>
+      Array.from({ length: LOG_SLOTS }, (_, slot) => {
+        const idx = (logIndex + slot) % BOOT_LOGS.length;
+        return { slot, text: BOOT_LOGS[idx], key: `${slot}-${idx}` };
+      }),
     [logIndex]
   );
+
+  const showBootUi = phase === "boot";
 
   return (
     <AnimatePresence>
@@ -284,7 +279,6 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
           aria-label="Loading"
           aria-busy={progress < 100}
         >
-          {/* Animated mesh background */}
           <motion.div
             className="pointer-events-none absolute inset-0"
             animate={{
@@ -299,20 +293,17 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
 
           <BootParticles />
 
-          {/* Perspective grid */}
           <motion.div
             className="pointer-events-none absolute inset-0 opacity-25"
             style={{
               backgroundImage:
                 "linear-gradient(rgba(67,56,255,0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(67,56,255,0.12) 1px, transparent 1px)",
               backgroundSize: "40px 40px",
-              perspective: "600px",
             }}
             animate={{ backgroundPosition: ["0px 0px", "0px 40px"] }}
             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
           />
 
-          {/* Scanlines */}
           <motion.div
             className="pointer-events-none absolute inset-0"
             animate={{ opacity: [0.03, 0.09, 0.03] }}
@@ -323,14 +314,12 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
             }}
           />
 
-          {/* Horizontal sweep */}
           <motion.div
             className="pointer-events-none absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan/50 to-transparent shadow-[0_0_20px_rgba(0,245,255,0.5)]"
             animate={{ top: ["-5%", "105%"] }}
             transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
           />
 
-          {/* White flash */}
           <AnimatePresence>
             {phase === "flash" && (
               <motion.div
@@ -343,11 +332,10 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
           </AnimatePresence>
 
           <div className="relative z-10 flex h-full flex-col items-center justify-center px-6">
-            {/* Header */}
             <motion.div
               className="mb-8 text-center"
               initial={{ opacity: 0, y: -30, filter: "blur(8px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              animate={{ opacity: showBootUi ? 1 : 0, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 1, ease: cinematicEase }}
             >
               <motion.p
@@ -358,11 +346,10 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
                 {UI.bootTitle}
               </motion.p>
               <p className="fa-text mt-2 font-body text-sm text-white/45">
-                {SITE.brandFa}
+                {UI.bootSubtitle}
               </p>
             </motion.div>
 
-            {/* Logo hub */}
             <motion.div
               className="relative mb-8 flex h-[200px] w-[200px] items-center justify-center"
               initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
@@ -379,33 +366,29 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
             >
               <OrbitalRings progress={progress} />
               <BootLogo />
-
-              <motion.div
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 font-mono text-3xl font-bold tabular-nums"
-                key={progressText}
-              >
+              <motion.div className="absolute -bottom-2 left-1/2 -translate-x-1/2 font-mono text-3xl font-bold tabular-nums">
                 <span className="text-cyan text-glow">{progressText}</span>
                 <span className="text-sm text-white/25">%</span>
               </motion.div>
             </motion.div>
 
-            {/* Stage */}
-            <AnimatePresence mode="wait">
-              {phase === "boot" && (
-                <motion.p
-                  key={stage}
-                  className="fa-text mb-6 font-body text-sm text-white/55"
-                  initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -12, filter: "blur(6px)" }}
-                  transition={{ duration: 0.4, ease: cinematicEase }}
-                >
-                  {BOOT_STAGES[stage]?.label ?? UI.bootLoading}
-                </motion.p>
-              )}
-            </AnimatePresence>
+            <div className="mb-6 flex h-6 items-center justify-center">
+              <AnimatePresence mode="wait">
+                {showBootUi && (
+                  <motion.p
+                    key={stage}
+                    className="fa-text font-body text-sm text-white/55"
+                    initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -12, filter: "blur(6px)" }}
+                    transition={{ duration: 0.4, ease: cinematicEase }}
+                  >
+                    {BOOT_STAGES[stage]?.label ?? UI.bootLoading}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </div>
 
-            {/* Name reveal */}
             <AnimatePresence>
               {(phase === "reveal" || phase === "flash") && (
                 <motion.div
@@ -413,6 +396,14 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                 >
+                  <motion.p
+                    className="font-mono text-xs tracking-[0.3em] text-emerald-400/80"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {SITE.heroAccess}
+                  </motion.p>
                   <motion.h2
                     className="fa-text text-center font-display text-2xl font-semibold leading-relaxed md:text-4xl lg:text-5xl"
                     initial={{ opacity: 0, y: 36, filter: "blur(16px)" }}
@@ -441,7 +432,6 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
               )}
             </AnimatePresence>
 
-            {/* Log panel */}
             <motion.div
               className="glass-edge glass relative w-full max-w-md overflow-hidden p-4 text-[11px] leading-6"
               initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -475,28 +465,36 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
                   transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
                 />
               </div>
-              <AnimatePresence mode="popLayout">
-                {visibleLogs.map((line, i) => {
-                  const isLatin = /^> [a-zA-Z0-9._\-]/.test(line);
+              <div className="relative h-[4.5rem] overflow-hidden">
+                {visibleLogs.map(({ slot, text, key }) => {
+                  const isLatin = /^> [a-zA-Z0-9._\-]/.test(text);
                   return (
-                  <motion.p
-                    key={`${logIndex}-${i}`}
-                    layout
-                    className={`${i === 0 ? "text-cyan/75" : "text-white/22"} ${
-                      isLatin
-                        ? "ltr-block font-mono text-left"
-                        : "fa-text text-right"
-                    }`}
-                    initial={{ opacity: 0, x: isLatin ? -12 : 12, height: 0 }}
-                    animate={{ opacity: 1, x: 0, height: "auto" }}
-                    exit={{ opacity: 0, x: isLatin ? 12 : -12 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {line}
-                  </motion.p>
+                    <div
+                      key={slot}
+                      className={`h-6 overflow-hidden truncate leading-6 ${
+                        slot === 0 ? "text-cyan/75" : "text-white/22"
+                      } ${
+                        isLatin
+                          ? "ltr-block font-mono text-left"
+                          : "fa-text text-right"
+                      }`}
+                    >
+                      <AnimatePresence mode="wait">
+                        <motion.span
+                          key={key}
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.25 }}
+                          className="inline-block max-w-full truncate"
+                        >
+                          {text}
+                        </motion.span>
+                      </AnimatePresence>
+                    </div>
                   );
                 })}
-              </AnimatePresence>
+              </div>
               <motion.span
                 className="inline-block h-3.5 w-2 bg-cyan"
                 animate={{ opacity: [1, 0, 1] }}
@@ -504,7 +502,6 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
               />
             </motion.div>
 
-            {/* Progress segments */}
             <div
               className="mt-5 flex w-full max-w-md gap-2"
               role="progressbar"
@@ -521,7 +518,7 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
                     className="absolute inset-y-0 left-0 rounded-full"
                     initial={{ width: "0%" }}
                     animate={{
-                      width: i < stage ? "100%" : i === stage ? "100%" : "0%",
+                      width: i <= stage ? "100%" : "0%",
                       background:
                         i <= stage
                           ? "linear-gradient(90deg, #4338FF, #00F5FF, #45FFB2)"
@@ -542,7 +539,7 @@ export default function BootLoader({ onComplete }: BootLoaderProps) {
               className="fa-text mt-7 font-body text-xs text-white/20 transition-colors hover:text-cyan"
               onClick={finish}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: showBootUi ? 1 : 0 }}
               transition={{ delay: 1.2 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

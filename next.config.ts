@@ -5,6 +5,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  transpilePackages: ["three", "@react-three/fiber"],
   output: isStatic ? "export" : undefined,
   basePath: isStatic && basePath ? basePath : undefined,
   assetPrefix: isStatic && basePath ? basePath : undefined,

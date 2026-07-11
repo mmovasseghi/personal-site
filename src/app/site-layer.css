@@ -1,0 +1,167 @@
+/* لایه خوانایی + پس‌زمینه WebGL آبی + فاز اسکرول */
+
+:root {
+  --scroll-p: 0;
+  --scroll-phase: hero;
+}
+
+.site-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 80% at 50% 50%,
+      transparent 0%,
+      rgba(2, 4, 8, 0.35) 55%,
+      rgba(2, 4, 8, 0.75) 100%
+    );
+}
+
+.site-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(6, 11, 20, 0.55) 0%,
+      rgba(6, 11, 20, 0.08) 18%,
+      rgba(6, 11, 20, 0.02) 38%,
+      rgba(6, 11, 20, 0.02) 62%,
+      rgba(6, 11, 20, 0.08) 82%,
+      rgba(6, 11, 20, 0.55) 100%
+    );
+}
+
+.scroll-phase-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scroll-phase-bg__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  transition: background 1.2s ease, opacity 1s ease;
+  will-change: transform, opacity;
+}
+
+.scroll-phase-bg__blob--a {
+  left: -8%;
+  top: 10%;
+  width: min(75vw, 560px);
+  height: min(75vw, 560px);
+  opacity: 0.85;
+}
+
+.scroll-phase-bg__blob--b {
+  right: -12%;
+  bottom: 8%;
+  width: min(65vw, 480px);
+  height: min(65vw, 480px);
+  opacity: 0.75;
+}
+
+.scroll-phase-bg__wash {
+  position: absolute;
+  inset: 0;
+  transition: background 1.2s ease;
+  opacity: 0.55;
+}
+
+[data-scroll-phase="hero"] .scroll-phase-bg__blob--a {
+  transform: translate(0, 0) scale(1);
+}
+
+[data-scroll-phase="about"] .scroll-phase-bg__blob--a {
+  transform: translate(8%, 5%) scale(1.05);
+}
+
+[data-scroll-phase="skills"] .scroll-phase-bg__blob--a {
+  transform: translate(-5%, -8%) scale(1.1);
+}
+
+[data-scroll-phase="work"] .scroll-phase-bg__blob--b {
+  transform: translate(-10%, -5%) scale(1.08);
+}
+
+[data-scroll-phase="contact"] .scroll-phase-bg__blob--b {
+  transform: translate(5%, 10%) scale(0.95);
+}
+
+[data-scroll-phase="tech"] .scroll-phase-bg__blob--a {
+  transform: translate(-3%, -10%) scale(1.12);
+}
+
+[data-scroll-phase="experience"] .scroll-phase-bg__blob--b {
+  transform: translate(-8%, -2%) scale(1.06);
+}
+
+[data-scroll-phase="resume"] .scroll-phase-bg__blob--b {
+  transform: translate(0%, 4%) scale(1.01);
+}
+
+.tunnel-canvas-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.blue-canvas-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.blue-canvas-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .blue-canvas-wrap {
+    opacity: 0.55;
+  }
+
+  .site-scrim {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(6, 11, 20, 0.65) 0%,
+        rgba(6, 11, 20, 0.15) 22%,
+        rgba(6, 11, 20, 0.05) 50%,
+        rgba(6, 11, 20, 0.15) 78%,
+        rgba(6, 11, 20, 0.65) 100%
+      );
+  }
+}
+
+.site-panel {
+  background: rgba(8, 14, 28, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.14);
+  border-radius: 0.85rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.lenis,
+  html.lenis-smooth {
+    scroll-behavior: auto;
+  }
+
+  .scroll-phase-bg__blob,
+  .scroll-phase-bg__wash {
+    transition: none;
+  }
+}

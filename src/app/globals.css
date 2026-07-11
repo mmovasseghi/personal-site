@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --void: #06070b;
-  --deep: #090b12;
-  --indigo: #4338ff;
-  --cyan: #00f5ff;
-  --mint: #45ffb2;
-  --purple: #7c4dff;
-  --acid: #c7ff3d;
-  --glass: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glow-indigo: rgba(67, 56, 255, 0.4);
-  --glow-cyan: rgba(0, 245, 255, 0.3);
+  --void: #060b14;
+  --deep: #0a1220;
+  --indigo: #3b82f6;
+  --cyan: #38bdf8;
+  --mint: #60a5fa;
+  --purple: #2563eb;
+  --acid: #93c5fd;
+  --glass: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(59, 130, 246, 0.15);
+  --glow-indigo: rgba(59, 130, 246, 0.35);
+  --glow-cyan: rgba(56, 189, 248, 0.25);
 }
 
 * {
@@ -22,9 +22,17 @@
 }
 
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
   max-width: 100%;
+}
+
+html.lenis,
+html.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+html:not(.lenis) {
+  scroll-behavior: smooth;
 }
 
 html[dir="rtl"] body {
@@ -112,7 +120,7 @@ body {
 }
 
 ::selection {
-  background: rgba(67, 56, 255, 0.4);
+  background: rgba(59, 130, 246, 0.4);
   color: #fff;
 }
 
@@ -276,10 +284,10 @@ body {
 
 .grid-bg {
   background-image: linear-gradient(
-      rgba(67, 56, 255, 0.03) 1px,
+      rgba(59, 130, 246, 0.03) 1px,
       transparent 1px
     ),
-    linear-gradient(90deg, rgba(67, 56, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 

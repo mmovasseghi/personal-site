@@ -129,16 +129,16 @@ export const staggerFast: Variants = {
 };
 
 export const cardHover = {
-  y: -8,
-  scale: 1.03,
-  boxShadow: "0 0 50px rgba(0,245,255,0.2), 0 0 100px rgba(67,56,255,0.12)",
+  y: -6,
+  scale: 1.02,
+  boxShadow: "0 0 40px rgba(59,130,246,0.22), 0 0 80px rgba(37,99,235,0.12)",
 };
 
 export const glowPulse = {
   boxShadow: [
-    "0 0 20px rgba(67,56,255,0.2)",
-    "0 0 60px rgba(0,245,255,0.45)",
-    "0 0 30px rgba(69,255,178,0.25)",
-    "0 0 20px rgba(67,56,255,0.2)",
+    "0 0 20px rgba(37,99,235,0.2)",
+    "0 0 50px rgba(59,130,246,0.4)",
+    "0 0 30px rgba(56,189,248,0.25)",
+    "0 0 20px rgba(37,99,235,0.2)",
   ],
 };

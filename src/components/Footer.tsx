@@ -1,58 +1,87 @@
 "use client";
 
-import { SITE, NAV_ITEMS, UI } from "@/lib/constants";
+import { SITE, NAV_ITEMS, UI, ALL_SKILLS } from "@/lib/constants";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+  const previewSkills = ALL_SKILLS.slice(0, 12);
+
   return (
-    <footer className="border-t border-white/5 bg-deep/50 px-6 py-12 md:px-12">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 md:flex-row md:justify-between">
-        <div>
-          <p className="font-display text-lg font-bold">
-            <span className="rgb-text">{SITE.shortName}</span>
-          </p>
-          <p className="mt-2 max-w-xs text-sm text-white/30">
-            {SITE.mission}
-          </p>
-          <p className="mt-4 font-mono text-[10px] text-white/20">
-            {SITE.brandFa}
-          </p>
-        </div>
+    <footer className="site-footer">
+      <div className="site-footer__line" aria-hidden />
 
-        <nav className="grid grid-cols-2 gap-x-8 gap-y-2 sm:grid-cols-3">
-          {NAV_ITEMS.map((item) => (
+      <div className="section-inner site-footer__inner">
+        <div className="site-footer__top">
+          <div className="site-footer__brand">
+            <p className="site-footer__name fa-text">{SITE.nameFa}</p>
+            <p className="site-footer__role ltr-block">
+              {SITE.titleEn} — {SITE.location}
+            </p>
+            <p className="site-footer__mission fa-text">{SITE.mission}</p>
+          </div>
+
+          <nav className="site-footer__nav" aria-label="ناوبری پایین صفحه">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="site-footer__nav-link fa-text"
+                data-cursor-hover
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="site-footer__contact">
             <a
-              key={item.href}
-              href={item.href}
-              className="font-mono text-xs uppercase tracking-wider text-white/30 transition-colors hover:text-cyan"
+              href={SITE.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-footer__link ltr-block"
+              data-cursor-hover
             >
-              {item.label}
+              github.com/mmovasseghi
             </a>
-          ))}
-        </nav>
-
-        <div className="font-mono text-xs text-white/30">
-          <a
-            href={SITE.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block transition-colors hover:text-cyan"
-          >
-            {UI.github}
-          </a>
-          <a
-            href={`mailto:${SITE.email}`}
-            className="mt-2 block transition-colors hover:text-cyan"
-          >
-            {UI.email}
-          </a>
-          <p className="mt-4 text-[10px] text-white/15">{SITE.location}</p>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="site-footer__link ltr-block"
+              data-cursor-hover
+            >
+              {SITE.email}
+            </a>
+            <a
+              href={`tel:${SITE.phoneIntl}`}
+              className="site-footer__link ltr-block"
+              data-cursor-hover
+            >
+              {SITE.phone}
+            </a>
+          </div>
         </div>
-      </div>
 
-      <div className="mx-auto mt-10 max-w-6xl border-t border-white/5 pt-6 text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/15">
-          © {new Date().getFullYear()} {SITE.nameFa}
-        </p>
+        <div className="site-footer__skills">
+          <p className="site-footer__skills-label ltr-block">Tech stack</p>
+          <div className="site-footer__skills-tags">
+            {previewSkills.map((s) => (
+              <span key={s} className="site-footer__skill ltr-block">
+                {s}
+              </span>
+            ))}
+            <span className="site-footer__skill site-footer__skill--more ltr-block">
+              +{ALL_SKILLS.length - previewSkills.length} more
+            </span>
+          </div>
+        </div>
+
+        <div className="site-footer__bar">
+          <p className="site-footer__copy fa-text">
+            © {year} {SITE.nameFa}
+          </p>
+          <a href="#hero" className="site-footer__back fa-text" data-cursor-hover>
+            {UI.backToTop} ↑
+          </a>
+        </div>
       </div>
     </footer>
   );

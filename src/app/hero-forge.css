@@ -1,0 +1,529 @@
+/* هیرو هکری — عکس پروفایل + حلقه‌های orbital + ترمینال */
+
+.forge-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 6rem 0 5rem;
+}
+
+.forge-hero__mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 25% 30%, rgba(67, 56, 255, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 40% at 75% 65%, rgba(0, 245, 255, 0.08) 0%, transparent 50%);
+  animation: forge-mesh 8s ease-in-out infinite alternate;
+}
+
+@keyframes forge-mesh {
+  0% { opacity: 0.85; }
+  100% { opacity: 1; }
+}
+
+.forge-hero__scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 245, 255, 0.02) 3px,
+    rgba(0, 245, 255, 0.02) 4px
+  );
+}
+
+.forge-hero__sweep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.45), transparent);
+  box-shadow: 0 0 18px rgba(0, 245, 255, 0.35);
+  animation: forge-sweep 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes forge-sweep {
+  0% { top: -2%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { top: 102%; opacity: 0; }
+}
+
+.forge-hero__floor {
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  bottom: 0;
+  height: 40%;
+  transform: perspective(500px) rotateX(72deg);
+  transform-origin: center bottom;
+  background:
+    linear-gradient(rgba(67, 56, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(67, 56, 255, 0.12) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(180deg, transparent, #000 35%, transparent);
+  opacity: 0.42;
+}
+
+.forge-hero__wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.forge-hero__grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 900px) {
+  .forge-hero__grid {
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 2.5rem;
+  }
+}
+
+.forge-hero__visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* آواتار */
+.hero-avatar {
+  position: relative;
+  width: min(280px, 72vw);
+  height: min(280px, 72vw);
+  display: grid;
+  place-items: center;
+}
+
+.hero-avatar__rings {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-avatar__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.hero-avatar__ring--dash {
+  border: 1px dashed rgba(0, 245, 255, 0.18);
+}
+
+.hero-avatar__ring--mid {
+  inset: 10px;
+  border: 1px solid rgba(67, 56, 255, 0.28);
+}
+
+.hero-avatar__ring--pulse {
+  inset: 18px;
+  border: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.hero-avatar__progress {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-avatar__sweep {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 42%;
+  margin-left: -1px;
+  margin-top: -42%;
+  transform-origin: 50% 100%;
+  background: linear-gradient(180deg, rgba(0, 245, 255, 0.7), transparent);
+}
+
+.hero-avatar__hud {
+  position: absolute;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  color: rgba(0, 245, 255, 0.35);
+  z-index: 3;
+}
+
+.hero-avatar__hud--tl { top: 4%; left: 2%; }
+.hero-avatar__hud--tr { top: 4%; right: 2%; }
+.hero-avatar__hud--bl { bottom: 14%; left: 2%; }
+.hero-avatar__hud--br { bottom: 14%; right: 2%; }
+
+.hero-avatar__frame {
+  position: relative;
+  z-index: 2;
+  width: 58%;
+  height: 58%;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, #4338ff, #00f5ff, #45ffb2);
+  box-shadow:
+    0 0 32px rgba(67, 56, 255, 0.35),
+    0 0 60px rgba(0, 245, 255, 0.12);
+}
+
+.hero-avatar__img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #060b14;
+}
+
+.hero-avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(1) sepia(0.2) saturate(2.8) hue-rotate(195deg) brightness(0.88) contrast(1.08);
+}
+
+.hero-avatar__img-tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(67, 56, 255, 0.22) 0%,
+    transparent 40%,
+    rgba(0, 245, 255, 0.12) 100%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hero-avatar__scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 245, 255, 0.04) 2px,
+    rgba(0, 245, 255, 0.04) 3px
+  );
+  pointer-events: none;
+}
+
+.hero-avatar__caption {
+  position: absolute;
+  bottom: -0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 0.35rem;
+  width: max-content;
+  max-width: 100%;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(67, 56, 255, 0.2);
+  background: rgba(6, 11, 20, 0.75);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.hero-avatar__caption-prompt { color: rgba(96, 165, 250, 0.8); }
+.hero-avatar__caption-sep { color: rgba(255, 255, 255, 0.25); }
+.hero-avatar__caption-cmd { color: rgba(165, 180, 252, 0.75); }
+.hero-avatar__caption-out { color: rgba(52, 211, 153, 0.75); }
+
+/* متن */
+.forge-hero__copy {
+  position: relative;
+  padding: 1.35rem 1.1rem;
+  border: 1px solid rgba(67, 56, 255, 0.2);
+  background: rgba(8, 12, 24, 0.62);
+  box-shadow:
+    0 0 0 1px rgba(0, 245, 255, 0.03) inset,
+    0 16px 48px rgba(0, 0, 0, 0.28);
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .forge-hero__copy {
+    text-align: right;
+    padding: 1.5rem 1.35rem;
+  }
+}
+
+.forge-hero__copy::before,
+.forge-hero__copy::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(0, 245, 255, 0.35);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.forge-hero__copy::before {
+  top: 8px;
+  right: 8px;
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.forge-hero__copy::after {
+  bottom: 8px;
+  left: 8px;
+  border-width: 0 0 1.5px 1.5px;
+}
+
+.forge-hero__terminal-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.forge-hero__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.forge-hero__dot--a { background: rgba(67, 56, 255, 0.7); }
+.forge-hero__dot--b { background: rgba(0, 245, 255, 0.55); }
+.forge-hero__dot--c { background: rgba(69, 255, 178, 0.45); }
+
+.forge-hero__terminal-title {
+  margin-right: auto;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: rgba(0, 245, 255, 0.5);
+}
+
+.forge-hero__status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: rgba(0, 245, 255, 0.6);
+}
+
+.forge-hero__status-bar {
+  display: block;
+  height: 2px;
+  width: 9rem;
+  margin-inline: auto;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .forge-hero__status-bar { margin-inline: 0 auto 0; }
+}
+
+.forge-hero__status-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  background: linear-gradient(90deg, #4338ff, #00f5ff, #45ffb2);
+}
+
+.forge-hero__access {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  color: rgba(69, 255, 178, 0.85);
+  text-shadow: 0 0 20px rgba(69, 255, 178, 0.25);
+}
+
+.forge-hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: rgba(0, 245, 255, 0.58);
+  margin-bottom: 0.85rem;
+}
+
+.forge-hero__meta em {
+  font-style: normal;
+  opacity: 0.35;
+}
+
+.forge-hero__live {
+  color: #45ffb2;
+  font-size: 0.42rem;
+  animation: forge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes forge-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.forge-hero__name {
+  font-size: clamp(2rem, 6.5vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  color: rgba(248, 250, 252, 0.97);
+  text-shadow: 0 0 40px rgba(67, 56, 255, 0.18);
+}
+
+.forge-hero__role {
+  margin-top: 0.45rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(165, 180, 252, 0.78);
+}
+
+.forge-hero__slogan {
+  margin-top: 1rem;
+  font-size: clamp(0.82rem, 1.8vw, 0.95rem);
+  font-weight: 500;
+  line-height: 1.75;
+  color: rgba(226, 232, 240, 0.68);
+}
+
+.forge-hero__slogan-accent {
+  background: linear-gradient(135deg, #a5b4fc 0%, #00f5ff 55%, #45ffb2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.forge-hero__motto {
+  margin-top: 0.75rem;
+  max-width: 32rem;
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: rgba(226, 232, 240, 0.68);
+}
+
+.forge-hero__hook {
+  margin-top: 0.45rem;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: rgba(56, 189, 248, 0.78);
+}
+
+@media (min-width: 900px) {
+  .forge-hero__role,
+  .forge-hero__slogan,
+  .forge-hero__motto,
+  .forge-hero__hook {
+    margin-inline: 0 auto 0;
+  }
+}
+
+.forge-hero__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  max-width: 20rem;
+}
+
+.forge-hero__tag {
+  padding: 0.28rem 0.6rem;
+  border: 1px solid rgba(67, 56, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(67, 56, 255, 0.06);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.56rem;
+  color: rgba(0, 245, 255, 0.65);
+}
+
+.forge-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-top: 1.35rem;
+}
+
+@media (min-width: 900px) {
+  .forge-hero__actions { justify-content: flex-start; }
+}
+
+.forge-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.58rem 1.2rem;
+  border: 1px solid rgba(67, 56, 255, 0.28);
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: rgba(226, 232, 240, 0.85);
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.forge-hero__btn:hover {
+  border-color: rgba(0, 245, 255, 0.4);
+  background: rgba(67, 56, 255, 0.1);
+  box-shadow: 0 0 24px rgba(0, 245, 255, 0.1);
+}
+
+.forge-hero__btn--primary {
+  border-color: rgba(0, 245, 255, 0.35);
+  background: rgba(67, 56, 255, 0.18);
+  color: #e0f2fe;
+}
+
+.forge-hero__scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 2.25rem;
+  font-size: 0.68rem;
+  color: rgba(148, 163, 184, 0.38);
+}
+
+.forge-hero__scroll-line {
+  display: block;
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(180deg, rgba(0, 245, 255, 0.5), transparent);
+  animation: forge-scroll-line 1.8s ease-in-out infinite;
+}
+
+@keyframes forge-scroll-line {
+  0%, 100% { transform: scaleY(0.6); opacity: 0.4; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+@media (max-width: 899px) {
+  .forge-hero { padding-top: 5.5rem; }
+  .forge-hero__visual { order: -1; }
+  .hero-avatar { width: min(240px, 65vw); height: min(240px, 65vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forge-hero__mesh,
+  .forge-hero__sweep,
+  .hero-avatar__ring,
+  .hero-avatar__sweep {
+    animation: none !important;
+  }
+}

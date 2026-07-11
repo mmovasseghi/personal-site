@@ -1,64 +1,100 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
-import { TECH_RADAR } from "@/lib/constants";
+import { ALL_SKILLS, SKILL_CATEGORIES } from "@/lib/constants";
 import SectionHeader from "./SectionHeader";
 
-const LEVEL_COLORS: Record<string, string> = {
-  core: "#00F5FF",
-  advanced: "#4338FF",
-  working: "#45FFB2",
-  exploring: "#7C4DFF",
-};
+const LANES = SKILL_CATEGORIES.map((cat) => ({
+  ...cat,
+  hex: cat.id === "microsoft" ? "0x4F00" : cat.id === "web" ? "0x7A10" : cat.id === "data" ? "0x3B91" : "0x2A44",
+}));
+
+function chunkSkills(items: string[], cols: number) {
+  const rows: string[][] = [];
+  for (let i = 0; i < items.length; i += cols) {
+    rows.push(items.slice(i, i + cols));
+  }
+  return rows;
+}
 
 export default function TechRadar() {
-  const levels = Object.entries(TECH_RADAR);
+  const registryRows = chunkSkills(ALL_SKILLS, 4);
 
   return (
-    <section id="tech" className="section relative overflow-hidden">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 50%, rgba(67,56,255,0.15), transparent 60%)",
-        }}
-      />
-
-      <div className="section-inner relative">
+    <section id="tech" className="section tech-stack">
+      <div className="section-inner">
         <SectionHeader id="tech" />
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2">
-          {levels.map(([key, { label, items }], i) => (
-            <motion.div
-              key={key}
-              className="glass-edge glass p-6 backlight"
-              initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <div className="flex items-center gap-3">
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: LEVEL_COLORS[key] }}
-                />
-                <h3 className="font-mono text-xs uppercase tracking-widest text-white/50">
-                  {label}
-                </h3>
+        <motion.div
+          className="tech-stack__panel"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="tech-stack__scan" aria-hidden />
+          <div className="tech-stack__chrome ltr-block">
+            <div className="tech-stack__dots" aria-hidden>
+              <span />
+              <span />
+              <span />
+            </div>
+            <p className="tech-stack__title">STACK_MANIFEST {"//"} modules.loaded</p>
+            <span className="tech-stack__badge">{ALL_SKILLS.length} MOD</span>
+          </div>
+
+          <div className="tech-stack__body">
+            <p className="tech-stack__prompt ltr-block">
+              <span>{">"}</span> cat stack_manifest.dat
+            </p>
+
+            <div className="tech-stack__lanes">
+              {LANES.map((lane, i) => (
+                <motion.article
+                  key={lane.id}
+                  className="tech-stack__lane"
+                  style={{ "--lane-color": lane.color } as CSSProperties}
+                  initial={{ opacity: 0, x: -12 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.07, duration: 0.45 }}
+                >
+                  <div className="tech-stack__lane-head ltr-block">
+                    <span className="tech-stack__lane-hex">{lane.hex}</span>
+                    <h3 className="tech-stack__lane-title">{lane.title}</h3>
+                  </div>
+                  <p className="tech-stack__lane-items ltr-block">
+                    {lane.items.join("  |  ")}
+                  </p>
+                </motion.article>
+              ))}
+            </div>
+
+            <div className="tech-stack__registry">
+              <div className="tech-stack__registry-head ltr-block">
+                <span>FULL_REGISTRY</span>
+                <span>Programming Languages &amp; Technologies</span>
               </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {items.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-white/5 bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-white/60"
-                  >
-                    {tech}
-                  </span>
+              <div className="tech-stack__matrix ltr-block" role="list">
+                {registryRows.map((row, ri) => (
+                  <div key={ri} className="tech-stack__matrix-row">
+                    {row.map((skill) => (
+                      <span key={skill} className="tech-stack__cell" role="listitem">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+
+            <p className="tech-stack__foot ltr-block">
+              <span className="tech-stack__foot-ok">[OK]</span>
+              stack integrity verified — end-to-end builder
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

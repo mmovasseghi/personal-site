@@ -1,94 +1,105 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CAPABILITIES } from "@/lib/constants";
+import { motion } from "framer-motion";
+import { CAPABILITIES, DELIVERABLES, SKILL_CATEGORIES } from "@/lib/constants";
 import { cinematicCard, cardHover } from "@/lib/motion";
 import SectionHeader from "./SectionHeader";
 
 export default function Capabilities() {
-  const [active, setActive] = useState<number | null>(null);
-
   return (
     <section id="skills" className="section grid-bg">
       <div className="section-inner">
         <SectionHeader id="skills" />
 
-        <div className="mt-16 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {CAPABILITIES.map((cap, i) => {
-            const isOpen = active === i;
-            const panelId = `capability-panel-${i}`;
-
-            return (
-              <motion.div
-                key={cap.title}
-                className="glass-edge glass backlight"
-                custom={i}
-                variants={cinematicCard}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                whileHover={cardHover}
-              >
-                <button
-                  type="button"
-                  className="w-full p-6 text-center"
-                  onClick={() => setActive(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  aria-controls={panelId}
-                  data-cursor-hover
-                >
-                  <div className="flex flex-col items-center gap-3">
-                    <motion.span
-                      className="font-mono text-3xl text-cyan"
-                      animate={{
-                        textShadow: isOpen
-                          ? "0 0 20px rgba(0,245,255,0.6)"
-                          : "0 0 0px transparent",
-                      }}
-                    >
-                      {cap.symbol}
-                    </motion.span>
-                    <div>
-                      <h3 className="fa-text text-center font-display text-base font-semibold">
-                        {cap.title}
-                      </h3>
-                      <p className="fa-text mt-1 text-center text-xs text-white/40">
-                        {cap.desc}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      id={panelId}
-                      role="region"
-                      aria-label={`${cap.title} technologies`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="flex flex-wrap justify-center gap-2 border-t border-white/5 px-6 pb-6 pt-4">
-                        {cap.tech.map((t) => (
-                          <span
-                            key={t}
-                            className="rounded-full bg-white/5 px-3 py-1 font-mono text-[10px] text-cyan/70"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            );
-          })}
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {CAPABILITIES.map((cap, i) => (
+            <motion.div
+              key={cap.title}
+              className="glass-edge glass backlight site-panel p-6 text-center"
+              custom={i}
+              variants={cinematicCard}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-8% 0px" }}
+              whileHover={cardHover}
+            >
+              <span className="font-mono text-2xl text-cyan/70">{cap.symbol}</span>
+              <h3 className="fa-text mt-4 font-display text-base font-semibold text-white/90">
+                {cap.title}
+              </h3>
+              <p className="fa-text mt-2 text-xs leading-6 text-white/45">
+                {cap.desc}
+              </p>
+            </motion.div>
+          ))}
         </div>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {SKILL_CATEGORIES.map((cat, i) => (
+            <motion.div
+              key={cat.id}
+              className="glass-edge glass backlight site-panel overflow-hidden"
+              custom={i}
+              variants={cinematicCard}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-8% 0px" }}
+              whileHover={cardHover}
+            >
+              <div
+                className="h-1 w-full"
+                style={{ background: `linear-gradient(90deg, ${cat.color}, transparent)` }}
+              />
+              <div className="p-5 text-center">
+                <h3 className="font-display text-sm font-semibold text-white/90">
+                  {cat.title}
+                </h3>
+                <p className="mt-3 font-mono text-[10px] leading-6 text-white/50 ltr-block">
+                  {cat.items.join(" | ")}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div
+          className="mt-14 glass-edge glass p-8 backlight"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h3 className="text-center font-display text-lg font-semibold text-white/90">
+            {DELIVERABLES.title}
+          </h3>
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
+            <ul className="space-y-3">
+              {DELIVERABLES.left.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-3 text-sm leading-7 text-white/60 ltr-block"
+                >
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <ul className="space-y-3">
+              {DELIVERABLES.right.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-3 text-sm leading-7 text-white/60 ltr-block"
+                >
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className="mt-8 text-center font-mono text-xs text-white/35 ltr-block">
+            {DELIVERABLES.tagline}
+          </p>
+        </motion.div>
       </div>
     </section>
   );

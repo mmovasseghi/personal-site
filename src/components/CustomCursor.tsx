@@ -6,31 +6,26 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 function useIsTouchDevice() {
   const [touch, setTouch] = useState(true);
-
   useLayoutEffect(() => {
     setTouch(
       window.matchMedia("(max-width: 768px)").matches ||
         window.matchMedia("(pointer: coarse)").matches
     );
   }, []);
-
   return touch;
 }
 
 export default function CustomCursor() {
   const [hovering, setHovering] = useState(false);
+  const [clicking, setClicking] = useState(false);
   const reducedMotion = useReducedMotion();
   const isTouch = useIsTouchDevice();
-  const x = useMotionValue(
-    typeof window !== "undefined" ? window.innerWidth / 2 : 0
-  );
-  const y = useMotionValue(
-    typeof window !== "undefined" ? window.innerHeight / 2 : 0
-  );
-  const ringX = useSpring(x, { stiffness: 120, damping: 18, mass: 0.5 });
-  const ringY = useSpring(y, { stiffness: 120, damping: 18, mass: 0.5 });
-  const dotX = useSpring(x, { stiffness: 350, damping: 28, mass: 0.12 });
-  const dotY = useSpring(y, { stiffness: 350, damping: 28, mass: 0.12 });
+  const x = useMotionValue(typeof window !== "undefined" ? window.innerWidth / 2 : 0);
+  const y = useMotionValue(typeof window !== "undefined" ? window.innerHeight / 2 : 0);
+  const ringX = useSpring(x, { stiffness: 180, damping: 22 });
+  const ringY = useSpring(y, { stiffness: 180, damping: 22 });
+  const dotX = useSpring(x, { stiffness: 400, damping: 28 });
+  const dotY = useSpring(y, { stiffness: 400, damping: 28 });
 
   useEffect(() => {
     if (reducedMotion || isTouch) return;
@@ -49,19 +44,26 @@ export default function CustomCursor() {
       );
     };
 
+    const down = () => setClicking(true);
+    const up = () => setClicking(false);
+
     window.addEventListener("mousemove", move, { passive: true });
     window.addEventListener("mouseover", over, { passive: true });
+    window.addEventListener("mousedown", down);
+    window.addEventListener("mouseup", up);
 
     return () => {
       document.body.classList.remove("has-custom-cursor");
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
+      window.removeEventListener("mousedown", down);
+      window.removeEventListener("mouseup", up);
     };
   }, [reducedMotion, isTouch, x, y]);
 
   if (reducedMotion || isTouch) return null;
 
-  const ringSize = hovering ? 56 : 40;
+  const ringSize = hovering ? 36 : 28;
 
   return (
     <>
@@ -71,21 +73,15 @@ export default function CustomCursor() {
         aria-hidden
       >
         <motion.div
-          className="rounded-full border-2 border-cyan"
+          className={`site-cursor__ring${hovering ? " site-cursor__ring--hover" : ""}`}
           animate={{
             width: ringSize,
             height: ringSize,
             x: -ringSize / 2,
             y: -ringSize / 2,
-            opacity: hovering ? 1 : 0.9,
-            borderColor: hovering
-              ? "rgba(0,245,255,1)"
-              : "rgba(0,245,255,0.75)",
-            boxShadow: hovering
-              ? "0 0 40px rgba(0,245,255,0.7), 0 0 80px rgba(67,56,255,0.35), inset 0 0 20px rgba(0,245,255,0.15)"
-              : "0 0 25px rgba(0,245,255,0.5), 0 0 50px rgba(67,56,255,0.25)",
+            scale: clicking ? 0.9 : 1,
           }}
-          transition={{ type: "spring", stiffness: 280, damping: 20 }}
+          transition={{ type: "spring", stiffness: 300, damping: 24 }}
         />
       </motion.div>
 
@@ -95,14 +91,12 @@ export default function CustomCursor() {
         aria-hidden
       >
         <motion.div
-          className="rounded-full bg-cyan"
+          className="site-cursor__dot"
           animate={{
-            width: hovering ? 10 : 6,
-            height: hovering ? 10 : 6,
-            x: hovering ? -5 : -3,
-            y: hovering ? -5 : -3,
-            boxShadow:
-              "0 0 16px rgba(0,245,255,1), 0 0 32px rgba(0,245,255,0.5)",
+            width: hovering ? 6 : 4,
+            height: hovering ? 6 : 4,
+            x: hovering ? -3 : -2,
+            y: hovering ? -3 : -2,
           }}
           transition={{ type: "spring", stiffness: 400, damping: 22 }}
         />

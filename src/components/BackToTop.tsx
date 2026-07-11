@@ -3,14 +3,15 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { UI } from "@/lib/constants";
+import { subscribePageScroll, scrollToTop } from "@/lib/scroll-events";
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 600);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    onScroll();
+    return subscribePageScroll(onScroll);
   }, []);
 
   return (
@@ -19,7 +20,7 @@ export default function BackToTop() {
         <motion.button
           type="button"
           className="fixed bottom-8 right-8 z-[9994] glass-edge glass flex h-12 w-12 items-center justify-center font-mono text-cyan neon-border"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => scrollToTop()}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
