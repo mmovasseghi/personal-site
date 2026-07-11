@@ -109,8 +109,7 @@ export const SECTIONS: Record<
     eyebrow: "درباره من",
     title: "کی هستم",
     highlight: "و چه کار می‌کنم",
-    subtitle:
-      "خلاصه‌ای از خودم — بدون اصطلاحات عجیب و غریب.",
+    subtitle: "خلاصه‌ای از خودم.",
     accent: "purple",
   },
   skills: {
